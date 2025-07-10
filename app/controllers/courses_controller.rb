@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   def index
-    @courses = Course.where(parent_id: nil)
+    @courses = Course.where(parent_id: 0)
   end
 
   def show

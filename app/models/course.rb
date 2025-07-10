@@ -10,10 +10,12 @@ class Course < ApplicationRecord
     foreign_key: :parent_id,
     dependent: :destroy
 
+  has_many :enrollments
+
   belongs_to :user
 
   def is_scheduled?
-    !(self.started_at.blank? && self.ended_at.blank?)
+    self.started_at.present? && self.ended_at.present?
   end
 
   def is_upcoming?

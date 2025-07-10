@@ -1,5 +1,5 @@
 json.course do
-  json.partial! "courses/course", course: @sub.course
+  json.partial! "courses/course", course: @submission.course
   json.exams do
     json.array! @exams do |e|
       json.question_text e.question_text
