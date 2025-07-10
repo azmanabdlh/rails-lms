@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  question_text: MyString
+  body: MyText
+  course: one
+  options: MyText
+  points: 1
+
+two:
+  question_text: MyString
+  body: MyText
+  course: two
+  options: MyText
+  points: 1

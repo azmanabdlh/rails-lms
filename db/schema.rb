@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_08_065259) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_10_054140) do
+  create_table "answers", force: :cascade do |t|
+    t.integer "exam_id", null: false
+    t.integer "submission_id", null: false
+    t.string "option_key"
+    t.boolean "is_answered", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_answers_on_exam_id"
+    t.index ["submission_id"], name: "index_answers_on_submission_id"
+  end
+
   create_table "courses", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -30,6 +41,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_065259) do
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
+  create_table "exams", force: :cascade do |t|
+    t.string "question_text"
+    t.text "body"
+    t.integer "course_id", null: false
+    t.text "options", default: "[]"
+    t.integer "points", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_exams_on_course_id"
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "started_at"
+    t.boolean "is_completed", default: false
+    t.datetime "submitted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_submissions_on_course_id"
+    t.index ["user_id"], name: "index_submissions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -38,4 +72,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_065259) do
     t.datetime "updated_at", null: false
     t.datetime "email_verified_at"
   end
+
+  add_foreign_key "answers", "exams"
+  add_foreign_key "answers", "submissions"
+  add_foreign_key "exams", "courses"
+  add_foreign_key "submissions", "courses"
+  add_foreign_key "submissions", "users"
 end

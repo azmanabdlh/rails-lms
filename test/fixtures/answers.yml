@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exam: one
+  submission: one
+  option_key: MyString
+  is_answered: false
+
+two:
+  exam: two
+  submission: two
+  option_key: MyString
+  is_answered: false

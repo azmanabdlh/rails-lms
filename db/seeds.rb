@@ -14,22 +14,62 @@ require "bcrypt"
 Faker::Config.locale = :id
 password = BCrypt::Password.create :password
 
-5.times do
-  User.create!(
-    name: Faker::Name.name,
-    email: Faker::Internet.email,
-    password: password
-  )
-end
+u1 = User.create!(
+  name: Faker::Name.name,
+  email: Faker::Internet.email,
+  password: password
+)
 
-Course.create!(
+c1 = Course.create!(
   title: Faker::Book.title,
   body: "Hello world",
   thumbnail_url: "img.example.com/random.jpg",
   started_at: Time.current + 1.days,
   ended_at: Time.current + 2.days,
+  user_id: u1.id
+)
+
+c2 = Course.create!(
+  title: Faker::Book.title,
+  body: "Sub Hello world",
+  thumbnail_url: "img.example.com/random.jpg",
   duration: 3600,
   min_score: 300,
-  parent_id: 0,
-  user_id: 1
+  parent_id: c1.id,
+  user_id: u1.id
+)
+
+# Exam
+Exam.create!(
+  question_text: Faker::Book.title,
+  course_id: c2.id,
+  points: 30,
+  options: <<~JSON
+  [
+    {
+    "key": "32323489",
+    "textPlain": "blablabla",
+    "textPlainHTML": "<p>blabla</p>",
+    "correct": true
+    },
+    {
+    "key": "32323422",
+    "textPlain": "zzzzzzzz",
+    "textPlainHTML": "<p>zzzzzz</p>",
+    "correct": false
+    },
+    {
+    "key": "32323489111",
+    "textPlain": "bbbbbbb",
+    "textPlainHTML": "<p>bbbbbb</p>",
+    "correct": false
+    },
+    {
+    "key": "32323489123",
+    "textPlain": "azazazazaz",
+    "textPlainHTML": "<p>azazazaz</p>",
+    "correct": false
+    }
+  ]
+  JSON
 )

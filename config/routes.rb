@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  scope "/api" do
-    resources :courses, only: [ :index, :show ], defaults: { format: :json }
+  scope "/api", defaults: { format: :json } do
+    resources :courses, only: [ :index, :show ]
+
+    get "/course/submission/:id", to: "submissions#index", as: :submission
   end
 end
