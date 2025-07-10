@@ -4,14 +4,11 @@ class SubmissionsController < ApplicationController
     answer = @submission.answers.index_by { |a| a.exam_id }
 
     @exams = @submission.course.exams.map do |e|
-      is_answered = answer[e.id].present? ? answer[e.id].is_answered : false
-      e.is_answered = is_answered
-
-      if is_answered
+      e.is_answered = answer[e.id].present? ? answer[e.id].is_answered : false
+      if e.is_answered
         e.options.map do |o|
           my_answer = answer[e.id].option_key
-          e.is_correct = o["key"].eql?(my_answer)
-          e.my_answer = my_answer
+          o[:my_answer] = o["key"].eql?(my_answer) && o["correct"].to_s.downcase.eql?("true")
         end
       end
       e
