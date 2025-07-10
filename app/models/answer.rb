@@ -4,4 +4,8 @@ class Answer < ApplicationRecord
 
   # validate is answered by user
   before_save { self.is_answered = self.option_key.present? }
+
+  def is_skipped?
+    self.exam_id > 0 and self.is_answered == false
+  end
 end

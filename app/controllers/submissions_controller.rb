@@ -2,14 +2,22 @@ class SubmissionsController < ApplicationController
   before_action :authorize_submission
   def index
     answer = @submission.answers.index_by { |a| a.exam_id }
+    @course = @submission.course
 
-    @exams = @submission.course.exams.map do |e|
-      e.is_answered = answer[e.id].present? and answer[e.id].is_answered
-      if e.is_answered
-        e.options.map do |o|
-          my_answer = answer[e.id].option_key
-          o[:my_answer] = o["key"].eql?(my_answer) and o["correct"].to_s.downcase.eql?("true")
-        end
+    is_randomize = @course.is_randomize
+    @course.exams = @course.exams.shuffle if is_randomize
+
+    @exams = @course.exams.map do |e|
+      e.options = e.options.shuffle if is_randomize
+      has_answer = answer[e.id].present?
+      if has_answer
+        e.is_skipped = answer[e.id].is_skipped?
+        e.is_answered = answer[e.id].is_answered
+      end
+
+      e.options.map do |o|
+        my_answer = answer[e.id].option_key if has_answer
+        o[:selected] = o["key"].eql?(my_answer) and o["correct"].to_s.downcase.eql?("true")
       end
       e
     end

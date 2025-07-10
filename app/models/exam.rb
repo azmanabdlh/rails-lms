@@ -3,4 +3,5 @@ class Exam < ApplicationRecord
 
   attribute :options, :json
   attribute :is_answered, :boolean, default: false
+  attribute :is_skipped, :boolean, default: false
 end

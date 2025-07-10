@@ -11,8 +11,10 @@ class Course < ApplicationRecord
     dependent: :destroy
 
   has_many :enrollments
-
   belongs_to :user
+
+  scope :mandatory, -> { where(is_mandatory: 1) }
+
 
   def is_scheduled?
     self.started_at.present? && self.ended_at.present?
