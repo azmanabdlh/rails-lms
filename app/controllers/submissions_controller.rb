@@ -17,7 +17,7 @@ class SubmissionsController < ApplicationController
 
       e.options.map do |o|
         my_answer = answer[e.id].option_key if has_answer
-        o[:selected] = o["key"].eql?(my_answer) and o["correct"].to_s.downcase.eql?("true")
+        o[:selected] = o["key"].eql? my_answer
       end
       e
     end
