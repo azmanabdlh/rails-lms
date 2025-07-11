@@ -48,26 +48,26 @@ Exam.create!(
   [
     {
     "key": "32323489",
-    "textPlain": "blablabla",
-    "textPlainHTML": "<p>blabla</p>",
+    "text_plain": "blablabla",
+    "text_plain_html": "<p>blabla</p>",
     "correct": true
     },
     {
     "key": "32323422",
-    "textPlain": "zzzzzzzz",
-    "textPlainHTML": "<p>zzzzzz</p>",
+    "text_plain_html": "<p>zzzzzz</p>",
+    "text_plain": "zzzzzzzz",
     "correct": false
     },
     {
     "key": "32323489111",
-    "textPlain": "bbbbbbb",
-    "textPlainHTML": "<p>bbbbbb</p>",
+    "text_plain": "bbbbbbb",
+    "text_plain_html": "<p>bbbbbb</p>",
     "correct": false
     },
     {
     "key": "32323489123",
-    "textPlain": "azazazazaz",
-    "textPlainHTML": "<p>azazazaz</p>",
+    "text_plain": "azazazazaz",
+    "text_plain_html": "<p>azazazaz</p>",
     "correct": false
     }
   ]
