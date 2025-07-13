@@ -5,8 +5,8 @@ json.min_passed_score course.min_score
 json.thumbnail_url course.thumbnail_url
 json.is_mandatory course.is_mandatory
 json.is_randomize course.is_randomize
-json.is_upcoming course.is_upcoming?
-json.is_scheduled course.is_scheduled?
+json.is_upcoming course.upcoming?
+json.is_scheduled course.schedule?
 json.started_at course.started_at
 json.ended_at course.ended_at
 json.teacher do

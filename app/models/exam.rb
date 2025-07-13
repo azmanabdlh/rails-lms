@@ -7,15 +7,11 @@ class Exam < ApplicationRecord
 
   class Option
     include ActiveModel::Serializers::JSON
-    attr_accessor :key,
-      :text_plain,
-      :text_plain_html,
-      :correct,
-      :selected # this indicate for user selected
+    # attr selected for indicate user selected
+    attr_accessor :key, :text_plain, :text_plain_html, :correct, :selected
 
     def attributes
       instance_values
-      # { "key" => nil, "text_plain" => nil, "text_plain_html" => nil, "correct" => nil, "selected": nil }
     end
 
     def attributes=(hash)

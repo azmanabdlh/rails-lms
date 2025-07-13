@@ -13,7 +13,7 @@ class Submission < ApplicationRecord
     self.course.exams = self.course.exams.shuffle if randomize
     self.course.exams.map do |exam|
       has_ans = ans[exam.id].present?
-      new_opts = exam.options.map do |op|
+      exam.options = exam.options.map do |op|
         o = Exam::Option.new
         o.from_json(op.to_json)
         o.my_answered?(ans[exam.id].option_key) if has_ans
@@ -23,7 +23,6 @@ class Submission < ApplicationRecord
 
       exam.is_answered = ans[exam.id].is_answered if has_ans
       exam.is_skipped = ans[exam.id].is_skipped? if has_ans
-      exam.options = new_opts
 
       # return mapped
       exam
