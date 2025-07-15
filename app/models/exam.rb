@@ -8,8 +8,8 @@ class Exam < ApplicationRecord
   delegate :answered?, :skipped?, to: :answer, allow_nil: true
 
   def options
-    raw = super || []
-    raw.map { |op| Option.new(op) }
+    opts = super || []
+    opts.map { |op| Option.new(op) }
   end
 
   def options=(opts)
