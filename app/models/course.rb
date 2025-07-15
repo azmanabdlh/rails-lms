@@ -19,7 +19,7 @@ class Course < ApplicationRecord
 
   def upcoming?
     now = Time.current
-    is_scheduled? ? now < self.started_at && self.ended_at > now : false
+    schedule? ? now < self.started_at && self.ended_at > now : false
   end
 
   def to_param

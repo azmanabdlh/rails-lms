@@ -7,7 +7,15 @@ json.lessons do
       json.array! l.exams do |e|
         json.question_text e.question_text
         json.question_points e.points
-        json.question_options e.options
+
+        json.options do
+          json.array! e.options do |op|
+            json.key_id op.key
+            json.text_plain op.text_plain
+            json.text_plain_html op.text_plain_html
+            json.correct op.correct
+          end
+        end
       end
     end
   end

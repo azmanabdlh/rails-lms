@@ -39,12 +39,8 @@ c2 = Course.create!(
   user_id: u1.id
 )
 
-# Exam
-Exam.create!(
-  question_text: Faker::Book.title,
-  course_id: c2.id,
-  points: 30,
-  options: <<~JSON
+
+raw_options = <<~JSON
   [
     {
     "key": "32323489",
@@ -71,5 +67,14 @@ Exam.create!(
     "correct": false
     }
   ]
-  JSON
+JSON
+
+options = JSON.load(raw_options)
+
+# Exam
+Exam.create!(
+  question_text: Faker::Book.title,
+  course_id: c2.id,
+  points: 30,
+  options: options.map { |op| Exam::Option.new(op) }
 )

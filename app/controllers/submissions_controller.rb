@@ -1,7 +1,7 @@
 class SubmissionsController < ApplicationController
   before_action :authorize_submission
   def index
-    @exam = @submission.my_exams
+    @exams = @submission.my_exams
   end
 
   private
