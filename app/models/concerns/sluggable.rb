@@ -17,7 +17,7 @@ module Sluggable
     # ex: blabla-blabla-43289472893
 
     current = send(column).to_s
-    return if prev_value(column) == current
+    return if prev(column) == current
 
     current = current.split().first if current.split().length == 1
     current = current.first(length) if current.length > length
@@ -26,7 +26,7 @@ module Sluggable
     self.slug = current.parameterize + "-#{rand}"
   end
 
-  def prev_value(column)
+  def prev(column)
     column_change = send("#{column}_change")
     prev = column_change.first if column_change.present?
     prev.to_s

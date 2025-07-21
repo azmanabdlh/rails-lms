@@ -4,7 +4,7 @@ class Submission < ApplicationRecord
 
   has_many :answers
 
-  def my_exams(*args)
+  def exams(*args)
     opts = args.extract_options!
     randomize = opts[:randomize].present? ? true : false
 
