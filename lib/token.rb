@@ -25,11 +25,11 @@ class Token
 
 
     def generate_for(salt, token)
-      @@instance.encryptor[salt].encrypt_and_sign(token)
+      instance.encryptor[salt].encrypt_and_sign(token)
     end
 
     def verify_for?(salt, encrypted_token)
-      decrypted = @@instance.encryptor[salt].decrypt_and_verify(encrypted_token)
+      decrypted = instance.encryptor[salt].decrypt_and_verify(encrypted_token)
       decrypted.present?
     rescue ActiveSupport::MessageEncryptor::InvalidMessage
       false
