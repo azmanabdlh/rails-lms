@@ -11,5 +11,8 @@ Rails.application.routes.draw do
     resources :courses, only: [ :index, :show ]
 
     get "/course/submission/:id", to: "submissions#index", as: :submission
+
+    # auth
+    post "/login", to: "login#perform"
   end
 end

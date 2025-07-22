@@ -19,8 +19,5 @@ class SubmissionsController < ApplicationController
   def authorize_submission
     id = params[:id]
     @submission = Submission.find(id)
-
-    # note: before action, please to makesure
-    # the submission is authorized for current user
   end
 end

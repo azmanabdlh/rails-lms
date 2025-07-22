@@ -17,13 +17,9 @@ module Authentication
   end
 
   def start_new_token_for(user)
-    session = user.session.find_or_create_by(
-      user_agent: resolve_user_agent,
-    )
-
-    session.update(
-      ip_addrres: request.remote_ip,
-    )
+    session = Session.find_or_create_by(user_agent: resolve_user_agent, user: user) do |s|
+      s.ip_address = request.remote_ip
+    end
 
     Token.generate_for("access token", session.id)
   end
@@ -33,25 +29,25 @@ module Authentication
   end
 
   def resume_session
-    Current.session ||= peform_authenticate_token
+    Current.session ||= perform_authenticate_token
   end
 
   def raise_request_authentication
     render json: { message: "Please login to perform this action" }, status: :unauthorized
   end
 
-  def peform_authenticate_token
+  def perform_authenticate_token
     session_id = resolve_session_id.to_i
     Session.find(session_id) if session_id > 0
   end
 
   def resolve_user_agent
-    user_agent = headers["X-USER-AGENT"] if headers["X-USER-AGENT"].present?
+    user_agent = request.headers["X-USER-AGENT"] if request.headers["X-USER-AGENT"].present?
     user_agent || request.user_agent
   end
 
   def resolve_session_id
-    token = headers["Authorization"].split.last if headers["Authorization"].present?
+    token = request.headers["Authorization"]&.split&.last
     Token.decrypt_for("access token", token)
   end
 end
