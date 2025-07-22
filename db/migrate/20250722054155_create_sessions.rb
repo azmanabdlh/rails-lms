@@ -3,6 +3,7 @@ class CreateSessions < ActiveRecord::Migration[8.0]
     create_table :sessions do |t|
       t.string :ip_address
       t.string :user_agent
+      t.references :user
 
       t.timestamps
     end

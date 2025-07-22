@@ -28,11 +28,14 @@ class Token
       instance.encryptor[salt].encrypt_and_sign(token)
     end
 
-    def verify_for?(salt, encrypted_token)
-      decrypted = instance.encryptor[salt].decrypt_and_verify(encrypted_token)
-      decrypted.present?
+    def decrypt_for(salt, encrypted_token)
+      instance.encryptor[salt].decrypt_and_verify(encrypted_token)
     rescue ActiveSupport::MessageEncryptor::InvalidMessage
-      false
+      ""
+    end
+
+    def verify_for?(salt, encrypted_token)
+      decrypt_for(salt, encrypted_token).present?
     end
   end
 end
