@@ -6,7 +6,7 @@ class Exam < ApplicationRecord
 
   def options
     opts = super || []
-    opts.map { |op| Objects::Option.new(op) }
+    opts.map { |op| Option.new(op) }
   end
 
   def options=(opts)

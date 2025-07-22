@@ -4,6 +4,12 @@ class Submission < ApplicationRecord
 
   has_many :answers
 
+  validates :course, presence: true
+  validates :user, presence: true
+  validates :started_at, presence: true
+
+  before_save { self.started_at = Time.current }
+
   def exams(*args)
     opts = args.extract_options!
     randomize = opts[:randomize].present? ? true : false
