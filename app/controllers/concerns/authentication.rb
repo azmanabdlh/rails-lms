@@ -17,11 +17,14 @@ module Authentication
   end
 
   def start_new_token_for(user)
-    session = Session.find_or_create_by(user_agent: resolve_user_agent, user: user) do |s|
+    device_id = request.headers["X-DEVICE-ID"]
+
+    session = Session.find_or_create_by(device_id: device_id, user: user) do |s|
       s.ip_address = request.remote_ip
+      s.user_agent = resolve_user_agent
     end
 
-    Token.generate_for("access token", session.id)
+    Token.generate_for("access token", session.token_digest)
   end
 
   def require_authentication
@@ -37,8 +40,10 @@ module Authentication
   end
 
   def perform_authenticate_token
-    session_id = resolve_session_id.to_i
-    Session.find(session_id) if session_id > 0
+    token = resolve_token.to_s
+    Session.find_by(token_digest: token) if token.present?
+  rescue ActiveRecord::RecordNotFound
+    nil
   end
 
   def resolve_user_agent
@@ -46,7 +51,8 @@ module Authentication
     user_agent || request.user_agent
   end
 
-  def resolve_session_id
+
+  def resolve_token
     token = request.headers["Authorization"]&.split&.last
     Token.decrypt_for("access token", token)
   end
