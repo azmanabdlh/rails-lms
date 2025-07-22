@@ -12,6 +12,10 @@ module Authentication
     end
   end
 
+  def authenticated?
+    Current.session.present?
+  end
+
   def start_new_token_for(user)
     session = user.session.find_or_create_by(
       user_agent: resolve_user_agent,
