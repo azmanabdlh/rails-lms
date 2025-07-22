@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   scope "/api", defaults: { format: :json } do
     resources :courses, only: [ :index, :show ]
 
-    get "/course/submission/:id", to: "submissions#index", as: :submission
+    scope "/course" do
+      get "/submission/:id", to: "submissions#index"
+      post "/submission", to: "submissions#create"
+    end
 
     # auth
     post "/login", to: "login#perform"

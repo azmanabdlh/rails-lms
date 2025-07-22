@@ -6,11 +6,11 @@ class SubmissionsController < ApplicationController
 
   def create
     course_id = params[:course_id].to_i
-    @my_submission = Current.user.submission.new(course_id: course_id)
+    @my_submission = Current.user.submissions.new(course_id: course_id)
     if @my_submission.save
       render :show, status: :created
     else
-      render json: { message: "invalid create submission", errors: submission.errors }, status: :unprocessable_entity
+      render json: { message: "validation error", errors: @my_submission.errors }, status: :unprocessable_entity
     end
   end
 

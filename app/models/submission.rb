@@ -6,7 +6,6 @@ class Submission < ApplicationRecord
 
   validates :course, presence: true
   validates :user, presence: true
-  validates :started_at, presence: true
 
   before_save { self.started_at = Time.current }
 
