@@ -50,4 +50,4 @@ gem "bcrypt", "~> 3.1"
 
 gem "faker", "~> 3.5"
 
-gem "jbuilder", "~> 2.13"
+gem "jbuilder", "~> 2.14"
